@@ -1,0 +1,81 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Blazor Components</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="tabs">
+                <span class="oi oi-graph" aria-hidden="true"></span> Tabs
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="modals">
+                <span class="oi oi-signpost" aria-hidden="true"></span> Modals
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="modals">
+                <span class="oi oi-signpost" aria-hidden="true"></span> Toasts
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="modals">
+                <span class="oi oi-script" aria-hidden="true"></span> TreeView
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="modals">
+                <span class="oi oi-script" aria-hidden="true"></span> JS Interop
+            </NavLink>
+        </div>
+
+        <div class="mt-3">
+            <AuthorizeView>
+                <Authorized>
+                    <div class="px-3">
+                        <a class="btn btn-link text-light" href="Identity/Account/Manage">
+                            Account
+                        </a>
+                    </div>
+                    <div class="px-3 mt-1">
+                        <form method="post" action="Identity/Account/LogOut">
+                            <button type="submit" class="btn btn-link text-light">Log out</button>
+                        </form>
+                    </div>
+                </Authorized>
+                <NotAuthorized>
+                    <div class="px-3">
+                        <a class="btn btn-link text-light" href="Identity/Account/Login">Log in</a>
+                    </div>
+                    <div class="px-3 mt-1">
+                        <a class="btn btn-link text-light" href="Identity/Account/Register">Register</a>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
