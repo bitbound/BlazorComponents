@@ -38,6 +38,10 @@ else
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.Use((ctx, next) => {
+        ctx.SetIdentityServerOrigin("https://blazor.lucency.co");
+        return next();
+    });
 }
 
 app.UseHttpsRedirection();
@@ -50,15 +54,6 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
-
-if (app.Environment.IsProduction())
-{
-    app.Use((ctx, next) => { 
-        ctx.SetIdentityServerOrigin("https://blazor.lucency.co");
-        return next();
-    });
-}
-
 
 app.MapRazorPages();
 app.MapControllers();
