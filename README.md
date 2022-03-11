@@ -1,28 +1,11 @@
-﻿@page "/"
+# Blazor Demo
 
-<PageTitle>Index</PageTitle>
+This app is a compilation of components and services that I frequently bring into new Blazor projects. I thought it would be helpful to have them all in one location. Hopefully it can also be helpful to others who are getting started out with Blazor! :)
 
-<h1>Blazor Demo</h1>
+There's another tip that didn't quite fit into any category. If you have a large component and want to keep the code cleaner, you can separate the Razor/HTML markup, C#, CSS, and any JS interop calls into nested files. The TreeView component has an example of this. It has TreeView.razor as the top-level file, with TreeView.razor.cs and TreeView.razor.css nested underneath. The C# file will replace the @code block in the Razor file and will be class that inherits ComponentBase. Any styles in the CSS file will be available within the component and should show up in intellisense.
 
-<p class="mt-2">
-    This app is a compilation of components and services that I frequently bring into new Blazor projects.
-    I thought it would be helpful to have them all in one location.  Hopefully it can also be helpful to
-    others who are getting started out with Blazor!  :)
-</p>
+### Demo Summary:
 
-<p class="mt-2">
-    There's another tip that didn't quite fit into any category.  If you have a large component and want
-    to keep the code cleaner, you can separate the Razor/HTML markup, C#, CSS, and any JS interop calls into
-    nested files.  The <code>TreeView</code> component has an example of this.  It has <code>TreeView.razor</code>
-    as the top-level file, with <code>TreeView.razor.cs</code> and <code>TreeView.razor.css</code> nested underneath.
-    The C# file will replace the <code>@("@code")</code> block in the Razor file and will be class that inherits
-    <code>ComponentBase</code>.  Any styles in the CSS file will be available within the component and should show
-    up in intellisense.
-</p>
-
-<p class="mt-2">
-    Demo Summary:
-</p>
 <ul>
     <li>
         Authorization
@@ -34,10 +17,9 @@
                 You can specify a <code>Policy</code> on the <code>AuthorizationView</code>.
             </li>
             <li>
-                Use <code>@("@attribute [Authorize]")</code> to control access to a whole page.
+                Use <code>"@attribute [Authorize]"</code> to control access to a whole page.
             </li>
         </ul>
-
     </li>
     <li>
         Forms
@@ -49,10 +31,9 @@
                 You can specify a <code>Policy</code> on the <code>AuthorizationView</code>.
             </li>
             <li>
-                Use <code>@("@attribute [Authorize]")</code> to control access to a whole page.
+                Use <code>"@attribute [Authorize]"</code> to control access to a whole page.
             </li>
         </ul>
-
     </li>
     <li>
         Transitions
@@ -64,7 +45,6 @@
                 Add transitional content in <code>Authorizing</code> and <code>Navigating</code> tags.
             </li>
         </ul>
-
     </li>
     <li>
         Tabs
@@ -77,7 +57,7 @@
                 including references to the parent component itself.
             </li>
             <li>
-                Bind route params in the <code>@("@page")</code> directive to private fields in the code block.
+                Bind route params in the <code>"@page"</code> directive to private fields in the code block.
             </li>
         </ul>
     </li>
@@ -102,7 +82,7 @@
                 You can pass in type arguments to components.
             </li>
             <li>
-                Use <code>@("@typeparam T")</code> at the top of the component.
+                Use <code>"@typeparam T"</code> at the top of the component.
             </li>
         </ul>
     </li>
@@ -129,7 +109,7 @@
                 Provides a strongly-typed interface for invoking JavaScript functions via <code>IJSRuntime</code>.
             </li>
             <li>
-                Use <code>@("@ref")</code> on HTML elements to bind them to <code>ElementReference</code> instances in the
+                Use <code>"@ref"</code> on HTML elements to bind them to <code>ElementReference</code> instances in the
                 code block.  These can be passed in as function parameters when invoking through <code>IJSRuntime</code>
                 to reference the elements on the JavaScript side.
             </li>

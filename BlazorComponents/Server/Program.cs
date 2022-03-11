@@ -1,5 +1,6 @@
 using BlazorComponents.Server.Data;
 using BlazorComponents.Server.Models;
+using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,14 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsProduction())
+{
+    app.Use((ctx, next) => { 
+        ctx.SetIdentityServerOrigin("https://blazor.lucency.co");
+        return next();
+    });
+}
 
 
 app.MapRazorPages();
