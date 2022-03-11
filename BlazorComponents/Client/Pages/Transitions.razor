@@ -1,0 +1,41 @@
+﻿@page "/transitions"
+
+<style>
+    .signal {
+        top: unset !important;
+        margin-top: 50px !important;
+        position: relative !important;
+    }
+</style>
+
+<PageTitle>Transitions</PageTitle>
+
+<h3>Transitions</h3>
+
+<p class="mt-2">
+    I'm using the below animation during loading and transition periods.
+    It's used in two Blazor components as the <code>LoadingSignal</code> component.
+    It's also used in one place as raw HTML + CSS, before the Blazor app loads.
+</p>
+
+<p class="mt-2">
+    The first place you'll want to add it is in <code>index.html</code>, within the
+    <code>#app</code> div.
+</p>
+
+<p class="mt-2">
+    Then you'll want to add it in <code>App.razor</code>.  Within the <code>Router</code>
+    tag, you'll add a <code>Navigating</code> tag and put your loading component in that.
+    
+</p>
+
+<p class="mt-2">
+    The last place you'll want to add the component is within any <code>AuthorizationView</code>
+    tags where you want it to appear, using the <code>Authorizing</code> tag.
+</p>
+
+<LoadingSignal />
+
+@code {
+
+}

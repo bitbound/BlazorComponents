@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Blazor Components</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -16,27 +21,47 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="authorization">
+                <span class="oi oi-shield" aria-hidden="true"></span> Authorization
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="forms">
+                <span class="oi oi-document" aria-hidden="true"></span> Forms
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="transitions">
+                <span class="oi oi-reload" aria-hidden="true"></span> Transitions
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="tabs">
-                <span class="oi oi-graph" aria-hidden="true"></span> Tabs
+                <span class="oi oi-bookmark" aria-hidden="true"></span> Tabs
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="modals">
-                <span class="oi oi-signpost" aria-hidden="true"></span> Modals
-            </NavLink>
-        </div>
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="modals">
-                <span class="oi oi-signpost" aria-hidden="true"></span> Toasts
+                <span class="oi oi-chat" aria-hidden="true"></span> Modals
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="modals">
-                <span class="oi oi-script" aria-hidden="true"></span> TreeView
+            <NavLink class="nav-link" href="tree">
+                <span class="oi oi-list" aria-hidden="true"></span> TreeView
             </NavLink>
         </div>
          <div class="nav-item px-3">
-            <NavLink class="nav-link" href="modals">
+            <NavLink class="nav-link" href="toasts">
+                <span class="oi oi-bell" aria-hidden="true"></span> Toasts
+            </NavLink>
+        </div>
+          <div class="nav-item px-3">
+            <NavLink class="nav-link" href="alerts">
+                <span class="oi oi-bell" aria-hidden="true"></span> Alerts
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="js-interop">
                 <span class="oi oi-script" aria-hidden="true"></span> JS Interop
             </NavLink>
         </div>
@@ -45,22 +70,22 @@
             <AuthorizeView>
                 <Authorized>
                     <div class="px-3">
-                        <a class="btn btn-link text-light" href="Identity/Account/Manage">
+                        <a class="btn btn-link text-light" href="authentication/profile">
                             Account
                         </a>
                     </div>
                     <div class="px-3 mt-1">
-                        <form method="post" action="Identity/Account/LogOut">
-                            <button type="submit" class="btn btn-link text-light">Log out</button>
-                        </form>
+                        <button type="button" class="btn btn-link text-light" @onclick="LogOut">
+                            Log out
+                        </button>
                     </div>
                 </Authorized>
                 <NotAuthorized>
                     <div class="px-3">
-                        <a class="btn btn-link text-light" href="Identity/Account/Login">Log in</a>
+                        <a class="btn btn-link text-light" href="authentication/login">Log in</a>
                     </div>
                     <div class="px-3 mt-1">
-                        <a class="btn btn-link text-light" href="Identity/Account/Register">Register</a>
+                        <a class="btn btn-link text-light" href="authentication/register">Register</a>
                     </div>
                 </NotAuthorized>
             </AuthorizeView>
@@ -74,6 +99,11 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    private async Task LogOut()
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

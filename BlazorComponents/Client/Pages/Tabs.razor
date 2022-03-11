@@ -1,0 +1,59 @@
+﻿@page "/tabs/{activeTab?}"
+@using BlazorComponents.Client.Components.TabControl
+
+<PageTitle>Tabs</PageTitle>
+
+<h3>Tabs</h3>
+
+<p class="mt-2">
+    The below tab control is composed of 3 component types: <code>TabControl</code>, 
+    <code>TabHeader</code>, and <code>TabContent</code>.  For each <code>TabHeader</code>, 
+    there is a corresponding <code>TabContent</code>.  The <code>TabControl</code> wraps all
+    of these and uses a <code>CascadingValue</code> to pass a reference to itself into the children.
+</p>
+
+<p class="mt-2">
+    The page directive includes a param in the route and looks like this: <code>@("@page \"/tabs/{activeTab?}\"")</code>.
+    This allows you to create links to specific tabs and to use the browser's back/forward navigation.
+    The route param automatically binds to the <code>ActiveTab</code> property on this component.
+</p>
+
+<p class="mt-2">
+
+</p>
+
+<TabControl InitialActiveTab="@(ActiveTab ?? "tab1")">
+    <TabHeaders>
+        <TabHeader Name="tab1" NavigationUri="/tabs/tab1">
+            Tab 1
+        </TabHeader>
+        <TabHeader Name="tab2" NavigationUri="/tabs/tab2">
+            Tab 2
+        </TabHeader>
+        <TabHeader Name="tab3" NavigationUri="/tabs/tab3">
+            Tab 3
+        </TabHeader>
+    </TabHeaders>
+    <TabContents>
+        <TabContent Name="tab1">
+            <h3 class="mt-4">
+                Here's some content for tab 1.
+            </h3>
+        </TabContent>
+        <TabContent Name="tab2">
+            <h3 class="mt-4">
+                Here's some content for tab 2.
+            </h3>
+        </TabContent>
+        <TabContent Name="tab3">
+            <h3 class="mt-4">
+                Here's some content for tab 3.
+            </h3>
+        </TabContent>
+    </TabContents>
+</TabControl>
+
+@code {
+    [Parameter]
+    public string ActiveTab { get; set; } = "tab1";
+}

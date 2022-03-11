@@ -1,0 +1,90 @@
+﻿@page "/tree"
+@using BlazorComponents.Client.Components.TreeView
+
+<PageTitle>Treeview</PageTitle>
+
+<h3>TreeView</h3>
+
+<p class="mt-2">
+    The <code>TreeView</code> component lets you display tree-like data, such
+    as a hierarchy of folders and files.  Like the tab control, it uses a
+    <code>CascadingValue</code> to pass down component references to children.
+</p>
+
+<p class="mt-2">
+    The component has a generic type parameter, which is passed in like so:
+    <code>@("<TreeView DataSource=\"TreeNodes\" T=\"TreeNode\"")</code>, where
+    <code>TreeNode</code> is the type of object being displayed.  In the component,
+    the type param is specified with <code>@("@typeparam T")</code> at the top.
+</p>
+
+<p class="mt-2">
+    Most of the input parameters for the component are <code>@("Action<T>")</code> or
+    <code>@("Func<T, TReturnType>")</code>, allowing for lots of flexibility.
+</p>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 15px" class="mt-4">
+
+    <div>
+        <TreeView DataSource="TreeNodes"
+            T="TreeNode"
+            ItemTypeSelector="x => x.NodeType"
+            ItemHeaderSelector="x => x.Name"
+            ItemSelected="NodeSelected"
+            ChildItemSelector="x => x.ChildItems"
+            ItemIconCssSelector="GetIconCss"
+            KeySelector="x => x.Id"
+            WrapperStyle="border: 1px solid gray; padding: .5em; height: 300px; border-radius: 5px;" />
+    </div>
+
+    <div>
+        <h5 class="mt4">
+            Selected Node: <code>@(_selectedNode?.Name)</code>
+        </h5>
+    </div>
+</div>
+
+@code {
+    private TreeNode? _selectedNode;
+
+    public List<TreeNode> TreeNodes { get; } = new();
+
+    public string GetIconCss(TreeNode node)
+    {
+        if (node.NodeType == TreeNodeType.Folder)
+        {
+            return "oi oi-folder text-warning";
+        }
+        return "oi oi-box text-success";
+    }
+
+    public Task NodeSelected(TreeNode node)
+    {
+        _selectedNode = node;
+        return Task.CompletedTask;
+    }
+
+    protected override void OnInitialized()
+    {
+        for (var i = 0; i < 5; i++)
+        {
+            var folder = new TreeNode()
+                {
+                    Name = $"Folder {i}",
+                    NodeType = TreeNodeType.Folder
+                };
+
+            for (var o = 0; o < 5; o++)
+            {
+                folder.ChildItems.Add(
+                    new TreeNode()
+                    {
+                        Name = $"Child Item {i} - {o}",
+                        NodeType = TreeNodeType.Item
+                    });
+            }
+            TreeNodes.Add(folder);
+        }
+        base.OnInitialized();
+    }
+}

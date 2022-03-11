@@ -1,0 +1,56 @@
+﻿@page "/js-interop"
+@inject IJsInterop JsInteropService
+@inject IToastService ToastService
+
+<PageTitle>JavaScript Interop</PageTitle>
+
+<h3>JavaScript Interop</h3>
+
+<p class="mt-2">
+    Blazor cannot directly access the DOM or invoke JavaScript.  It must use the <code>IJSRuntime</code>
+    service provided by the Blazor framework.  It allows you to invoke JavaScript functions by passing in
+    a string that identifies the function name, which must be available in the global <code>window</code>
+    context.
+</p>
+
+<p class="mt-2">
+    You can also pass in function arguments, such as primitive types (string, int, etc.) or 
+    an <code>ElementReference</code> struct.  You can bind an element to an <code>ElementReference</code> 
+    by adding the following attribute to an HTML element: <code>@("@ref=\"_privateFieldInCodeBlock\"")</code>
+</p>
+
+
+<p class="mt-2">
+    The <code>IJsInterop</code> service in this project provides a strongly-typed interface for calling
+    various JavaScript functions.  The functions themselves are declared in <code>interop.js</code>, which
+    is loaded within <code>index.html</code> and is available everywhere in the app.
+</p>
+
+<p class="mt-2">
+    <button class="btn btn-lg btn-primary" @onclick="InvokePrompt">
+        Invoke Prompt
+    </button>
+</p>
+
+<p class="mt-2">
+    <button class="btn btn-lg btn-primary" @onclick="InvokeScroll">
+        Invoke Scroll
+    </button>
+</p>
+
+<h3 @ref="_hiddenElement" style="margin-top: 5000px">You found me!</h3>
+
+@code {
+    private ElementReference _hiddenElement;
+
+    private async Task InvokePrompt()
+    {
+        var result = await JsInteropService.Confirm("Was this helpful?");
+        ToastService.ShowToast($"Your response was: {result}");
+    }
+
+    private async Task InvokeScroll()
+    {
+        await JsInteropService.ScrollToElement(_hiddenElement);
+    }
+}

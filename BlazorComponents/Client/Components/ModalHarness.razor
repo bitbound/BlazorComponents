@@ -27,9 +27,12 @@
 
             </div>
             <div class="modal-footer">
-                @foreach (var button in ModalService.Buttons)
+                @if (ModalService?.Buttons is not null)
                 {
-                    <button @key="button" type="button" class="@button.Class" @onclick="() => ExecuteButtonAction(button.OnClick)">@button.Text</button>
+                    foreach (var button in ModalService.Buttons)
+                    {
+                        <button @key="button" type="button" class="@("btn " + button.Class)" @onclick="() => ExecuteButtonAction(button.OnClick)">@button.Text</button>
+                    }   
                 }
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModal">Close</button>
             </div>
@@ -38,8 +41,8 @@
 </div>
 
 @code {
-    private string _showClass;
-    private string _displayStyle;
+    private string _showClass = "";
+    private string _displayStyle = "";
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -66,10 +69,10 @@
 
     private async Task CloseModal()
     {
-        _showClass = null;
+        _showClass = "";
         await InvokeAsync(StateHasChanged);
         await Task.Delay(100);
-        _displayStyle = null;
+        _displayStyle = "";
         await InvokeAsync(StateHasChanged);
     }
 

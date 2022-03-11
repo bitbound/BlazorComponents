@@ -1,0 +1,56 @@
+﻿@page "/authorization"
+
+<PageTitle>Authorization</PageTitle>
+
+<h3 class="mb-4">Authorization</h3>
+
+<div class="card border-primary mb-3">
+  <div class="card-header font-weight-bold">
+    <AuthorizeView>
+        <Authorizing>
+            <LoadingSignal />
+        </Authorizing>
+        <Authorized>
+            You are logged in.
+        </Authorized>
+        <NotAuthorized>
+            You are logged out.
+        </NotAuthorized>
+    </AuthorizeView>
+
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">
+        <AuthorizeView Policy="@TwoFactorRequirement.PolicyName">
+            <Authorized>
+                TwoFactorRequirement policy satisfied.
+            </Authorized>
+            <NotAuthorized>
+                TwoFactorRequirement policy not satisfied.
+            </NotAuthorized>
+        </AuthorizeView>
+    </h5>
+    
+    <p class="card-text">
+        The above headers are wrapped within an <code>AuthorizeView</code> tag, then within 
+        <code>Authorized</code> and <code>NotAuthorized</code> tags.  The contents will change
+        dynamically based on authorization state.
+    </p>
+  </div>
+</div>
+
+<p class="mt-2">
+    <code>AuthorizeView</code> has a <code>Policy</code> parameter, where you can specify a
+     policy to authorize against.
+</p>
+
+<p class="mt-2">
+    Like API controllers, you can use <code>AuthorizeAttribute</code> on the whole page
+    by adding <code>@("@attribute [Authorize]")</code> at the top of the Razor file.  If unauthorized,
+    the browser will be redirected to the login page.  Remember to add <code>@("@using Microsoft.AspNetCore.Authorization")</code> 
+    to your <code>_Imports.razor</code> file first.
+</p>
+
+@code {
+
+}

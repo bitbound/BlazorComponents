@@ -1,0 +1,8 @@
+﻿.tree-view-item {
+   padding: .25em .5em .25em .5em;
+}
+
+.pointer {
+    cursor: pointer;
+    user-select: none;
+}

@@ -1,13 +1,57 @@
 ﻿@inherits LayoutComponentBase
+@inject IAuthService AuthService
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<AuthorizeView Policy="@TwoFactorRequirement.PolicyName">
+    <Authorized>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu />
+            </div>
 
-    <main>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+            <main>
+                <article class="content px-4">
+                    @Body
+                </article>
+
+                <ToastHarness />
+
+                <ModalHarness />
+            </main>
+        </div>
+
+    </Authorized>
+    <Authorizing>
+        <LoadingSignal></LoadingSignal>
+    </Authorizing>
+    <NotAuthorized>
+        @if (_twoFactorViolation == true)
+        {
+            <div class="container mt-5">
+                <h3>Two-Factor Authentication Required</h3>
+
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>Two-factor authentication is required.  Click the button below to set up your authenticator app.</p>
+                        <p>
+                            <a href="/Identity/Account/Manage/TwoFactorAuthentication" class="btn btn-primary">Enable 2FA</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    // TODO: Temporary. Remove when fix https://github.com/dotnet/aspnetcore/pull/31794 ships in .NET 6.
+    // I haven't checked to see if this is actually fixed now.
+    private bool? _twoFactorViolation;
+
+    protected override Task OnInitializedAsync()
+    {
+        // Implement below method in the auth service.
+        //_twoFactorViolation = await AuthService.IsInTwoFactorViolation();
+        return Task.CompletedTask;
+    }
+}

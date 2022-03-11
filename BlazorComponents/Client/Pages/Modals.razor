@@ -1,0 +1,92 @@
+﻿@page "/modals"
+@using BlazorComponents.Client.Components.ModalContents
+@using Microsoft.AspNetCore.Components.Rendering
+@inject IModalService ModalService
+@inject IJsInterop JsInterop
+
+<PageTitle>Modals</PageTitle>
+
+<h3>Modals</h3>
+
+<p class="mt-2">
+    It's often convenient to be able to show a modal in C# code by passing in
+    a few params, without having to add all the Bootstrap HTML and CSS markup
+    every time.  The <code>ModalService</code> and <code>ModalHarness</code> are
+    used to accomplish this.
+</p>
+
+<p class="mt-2">
+    The <code>ModalHarness</code> is a component that you'll add to <code>Mainlayout.razor</code>,
+    just inside the end of the <code>main</code> tag.  The component contains all the markup needed
+    to show a Bootstrap modal and responds to the <code>ModalShown</code> event from <code>ModalService.</code>
+</p>
+
+<p class="mt-2">
+    Inject the <code>IModalService</code> into components from which you want to show modals,
+    then call <code>ShowModal</code>.  The most basic overload builds the modal body from
+    the supplied string array.  The below button is shows a modal like this.
+</p>
+
+<p>
+    <button class="btn btn-lg btn-primary" @onclick="ShowTextModal">Show Text Modal</button>
+</p>
+
+
+<p class="mt-2">
+    At some point, you may have a need to render another component within the modal.
+    This is done using a <code>RenderFragment</code>.  In Razor markup, it's as easy
+    as putting the child component(s) within the parent tag.
+</p>
+
+<p class="mt-2">
+    Creating a <code>RenderFragment</code> in C# is a little tricky, though.  The next
+    button calls a method like that looks like the below, which send the <code>DemoModal</code>
+    component as a <code>RenderFragment</code> into the modal service to be rendered.
+</p>
+
+<p>
+    <code>
+        <pre>
+            @(@"
+                public async Task ShowRenderFragmentModal()
+                {
+                    void DemoModalFragment(RenderTreeBuilder builder)
+                    {
+                        builder.OpenComponent<DemoModal>(0);
+                        builder.AddAttribute(1, DemoModal.InputParamName, ""Test param!"");
+                        builder.CloseComponent();
+                    }
+                     await ModalService.ShowModal(""Modal Title"", DemoModalFragment);
+                }
+            ")
+        </pre>
+    </code>
+</p>
+
+<p>
+    <button class="btn btn-lg btn-primary" @onclick="ShowRenderFragmentModal">Show Component Modal</button>
+</p>
+
+@code {
+    public async Task ShowTextModal()
+    {
+        await ModalService.ShowModal(
+            "Modal Title",
+            new[] {"This is a modal body using strings."},
+            new[] { new ModalButton("btn-primary", "Woohoo!", () =>
+            {
+                JsInterop.Alert("Good job!  FYI, this is an alert from JavaScript interop.");
+            }) });
+    }
+
+    public async Task ShowRenderFragmentModal()
+    {
+        void DemoModalFragment(RenderTreeBuilder builder)
+        {
+            builder.OpenComponent<DemoModal>(0);
+            builder.AddAttribute(1, DemoModal.InputParamName, "Test param!");
+            builder.CloseComponent();
+        }
+         await ModalService.ShowModal("Modal Title", DemoModalFragment);
+    }
+}

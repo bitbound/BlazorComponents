@@ -1,0 +1,77 @@
+﻿@page "/forms"
+@inject IToastService ToastService
+
+<PageTitle>Forms</PageTitle>
+
+<h3>Forms</h3>
+
+<p class="mt-2">
+    Blazor forms are created using the <code>EditForm</code> component.  The <code>Model</code>
+    parameter should be an object in a field or property in the code block that represents
+    the data on the form.  The <code>OnValidSubmit</code> parameter will be a method that
+    handles a valid submission, after validation has succeded.
+</p>
+
+<p class="mt-2">
+    You will use Blazor's built-in components for form input controls, such as <code>InputText</code>,
+    <code>InputSelect</code>, and <code>InputTextArea</code>.
+</p>
+<p class="mt-2">
+    To enable validation, first add attributes to your model properties from the <code>DataAnnotations</code>
+    namespace.  Then add a <code>DataAnnotationsValidator</code> component as the first one inside the
+    <code>EditForm</code>.  You can add a <code>ValidationSummary</code> anywhere in the form that will
+    display all validation errors.  You can add a <code>ValidationMessage</code> for each input property as well.
+</p>
+
+<h5>Sample Contact Form</h5>
+
+<div class="mt-2" style="max-width: 400px">
+    <EditForm Model="_input" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="font-weight-bold text-info mt-2">
+            Your Name
+        </div>
+        <div>
+            <InputText @bind-Value="_input.Name" class="form-control" />
+            <ValidationMessage For="() => _input.Name" />
+        </div>
+
+        <div class="font-weight-bold text-info mt-2">
+            Your Email
+        </div>
+        <div>
+            <InputText @bind-Value="_input.Email" class="form-control" />
+            <ValidationMessage For="() => _input.Email" />
+        </div>
+
+        <div class="font-weight-bold text-info mt-2">
+            Message
+        </div>
+        <div>
+            <InputTextArea @bind-Value="_input.Message" style="width:100%; height: 10em;"></InputTextArea>
+            <ValidationMessage For="() => _input.Message" />
+        </div>
+
+        <div>
+            <ValidationSummary />
+        </div>
+
+        <div class="text-right mt-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+    private readonly ContactFormInput _input = new();
+
+    private void HandleValidSubmit()
+    {
+        ToastService.ShowToast("Form submitted successfully to nowhere!", 5000);
+        _input.Email = "";
+        _input.Name = "";
+        _input.Message = "";
+    }
+}

@@ -7,7 +7,6 @@ namespace BlazorComponents.Client.Services
     public interface IAuthService
     {
         Task<bool> IsAuthenticated();
-        //Task<IdentityUser> GetUser();
     }
 
     public class AuthService : IAuthService
@@ -21,13 +20,8 @@ namespace BlazorComponents.Client.Services
 
         public async Task<bool> IsAuthenticated()
         {
-            var principal = await _authProvider.GetAuthenticationStateAsync();
-            return principal?.User?.Identity?.IsAuthenticated ?? false;
+            var state = await _authProvider.GetAuthenticationStateAsync();
+            return state?.User?.Identity?.IsAuthenticated ?? false;
         }
-        
-        //public async Task<IdentityUser> GetUser()
-        //{
-        //   I had an implementation for getting the user here, but it was very project-specific.
-        //}
     }
 }

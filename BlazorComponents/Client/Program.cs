@@ -1,4 +1,8 @@
 using BlazorComponents.Client;
+using BlazorComponents.Client.Auth;
+using BlazorComponents.Client.Services;
+using BlazorComponents.Shared.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -14,5 +18,18 @@ builder.Services.AddHttpClient("BlazorComponents.ServerAPI", client => client.Ba
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazorComponents.ServerAPI"));
 
 builder.Services.AddApiAuthorization();
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy(TwoFactorRequirement.PolicyName, builder =>
+    {
+        builder.Requirements.Add(new TwoFactorRequirement());
+    });
+});
+
+builder.Services.AddSingleton<IJsInterop, JsInterop>();
+builder.Services.AddSingleton<IModalService, ModalService>();
+builder.Services.AddSingleton<IToastService, ToastService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthorizationHandler, TwoFactorRequiredHandler>();
 
 await builder.Build().RunAsync();

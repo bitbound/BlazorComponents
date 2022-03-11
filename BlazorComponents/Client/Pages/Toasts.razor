@@ -1,0 +1,52 @@
+﻿@page "/toasts"
+@inject IToastService ToastService
+
+<PageTitle>Toasts</PageTitle>
+
+<h3>Toasts</h3>
+
+<p class="mt-2">
+    Similar to modals, toasts are comprised of a <code>ToastService</code> and a
+    <code>ToastHarness</code>.  The harness should be placed in <code>MainLayout.razor</code>,
+    just inside the end of the <code>main</code> tag.  It should be right next to <code>ModalHarness</code>.
+</p>
+
+<p class="mt-2">
+    Then you can inject <code>ToastService</code> into components and services to display toasts.
+</p>
+
+<p class="mt-2">
+    Try selecting a background and toast message, then showing it!
+</p>
+
+<div class="mt-2" style="max-width: 400px">
+    <label>Message</label>
+    <input class="form-control mb-3" @bind="_toastMessage" />
+
+    <label>Background</label>
+    <select class="form-control mb-3" @bind="_classString">
+        <option value="bg-success text-white" selected>Success</option>
+        <option value="bg-info text-white">Info</option>
+        <option value="bg-warning text-white">Warning</option>
+        <option value="bg-danger text-white">Error</option>
+    </select>
+    <div class="text-right">
+        <button class="btn btn-primary" @onclick="ShowToast">
+            Show
+        </button>
+    </div>
+</div>
+
+@code {
+    private string _classString = "bg-success text-white";
+    private string _toastMessage = "";
+
+    private void ShowToast()
+    {
+        var message = string.IsNullOrWhiteSpace(_toastMessage) ? 
+            "Oh noes!  No message!" :
+            _toastMessage;
+
+        ToastService.ShowToast(message, classString: _classString);
+    }
+}

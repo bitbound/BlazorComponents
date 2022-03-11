@@ -1,0 +1,32 @@
+﻿@inject IJsInterop JsInterop
+
+<h5>
+    I'm a component for a modal!
+</h5>
+<p>
+    The following <code>InputParam</code> was passed in: @InputParam
+</p>
+<select class="form-control mb-3" @bind="_selection">
+    <option value="Option 1">Option 1</option>
+    <option value="Option 2">Option 2</option>
+    <option value="Option 3">Option 3</option>
+</select>
+
+<div class="text-right">
+    <button class="btn btn-primary" @onclick="DoAlert">Run</button>
+</div>
+
+@code {
+    public const string InputParamName = nameof(InputParam);
+
+
+    private string _selection = "";
+
+    [Parameter]
+    public string InputParam { get; set; } = "";
+
+    private async Task DoAlert()
+    {
+        await JsInterop.Alert($"{_selection} was selected.");
+    }
+}
