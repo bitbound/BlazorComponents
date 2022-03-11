@@ -46,7 +46,7 @@
 @code {
     // TODO: Temporary. Remove when fix https://github.com/dotnet/aspnetcore/pull/31794 ships in .NET 6.
     // I haven't checked to see if this is actually fixed now.
-    private bool? _twoFactorViolation;
+    private bool? _twoFactorViolation = false;
 
     protected override Task OnInitializedAsync()
     {
