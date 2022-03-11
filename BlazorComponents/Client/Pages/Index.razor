@@ -15,9 +15,9 @@
     to keep the code cleaner, you can separate the Razor/HTML markup, C#, CSS, and any JS interop calls into
     nested files.  The <code>TreeView</code> component has an example of this.  It has <code>TreeView.razor</code>
     as the top-level file, with <code>TreeView.razor.cs</code> and <code>TreeView.razor.css</code> nested underneath.
-    The C# file will replace the <code>@("@code")</code> block in the Razor file and will be class that inherits
-    <code>ComponentBase</code>.  Any styles in the CSS file will be available within the component and should show
-    up in intellisense.
+    The C# file will replace the <code>@("@code")</code> block that's normally in the Razor file and will be a class 
+    that inherits <code>ComponentBase</code>.  Any styles in the CSS file will be available within the component and 
+    should show up in intellisense.
 </p>
 
 <p class="mt-2">
