@@ -25,13 +25,19 @@ There's another tip that didn't quite fit into any category. If you have a large
         Forms
         <ul>
             <li>
-                Use <code>AuthorizationView</code>, <code>Authorized</code>, and <code>NotAuthorized</code> to show content based on auth state.
+                Use the built-in <code>EditForm</code> component to display a form control that's bound to a model.
             </li>
             <li>
-                You can specify a <code>Policy</code> on the <code>AuthorizationView</code>.
+                Use built-in components for input controls, such as <code>InputText</code>, <code>InputSelect</code>, and <code>InputTextArea</code>.
             </li>
             <li>
-                Use <code>"@attribute [Authorize]"</code> to control access to a whole page.
+                Use <code>DataAnnotations</code> on the model to use for form validation.
+            </li>
+            <li>
+                Add <code>DataAnnotationsValidator</code> as the first child in the form to enable form validation.
+            </li>
+            <li>
+                Use <code>ValidationSummary</code> and <code>ValidationMessage</code> to display validation errors.
             </li>
         </ul>
     </li>
