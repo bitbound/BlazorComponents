@@ -1,0 +1,67 @@
+﻿@page "/dropdowns"
+
+<PageTitle>Dropdown Button</PageTitle>
+
+<h3>Dropdown Button</h3>
+
+<p class="mt-2">
+    The <code>DropdownButton</code> provides a simple implementation of Bootstrap's Dropdown component.
+</p>
+
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 15px" class="mt-4">
+
+    <div>
+        <DropdownButton ButtonClass="btn-primary">
+            <ButtonContent>
+                <i class="oi oi-bolt"></i>
+                <span class="ml-2">Actions</span>
+            </ButtonContent>
+            <ChildListItems>
+                <li>
+                    <button class="dropdown-item" @onclick="EmailButtonClicked">
+                        <i class="oi oi-envelope-closed" title="Email"></i>
+                        <span class="ml-2">Email</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="dropdown-item" @onclick="TextButtonClicked">
+                        <i class="oi oi-chat" title="Text"></i>
+                        <span class="ml-2">Text</span>
+                    </button>
+                </li>   
+                    <li>
+                    <button class="dropdown-item" @onclick="CallButtonClicked">
+                        <i class="oi oi-phone" title="Call"></i>
+                        <span class="ml-2">Call</span>
+                    </button>
+                </li>     
+            </ChildListItems>
+        </DropdownButton>
+    </div>
+
+    <div>
+        <h5 class="mt4">
+            Clicked Button: <code>@(_clickedButton)</code>
+        </h5>
+    </div>
+</div>
+
+@code {
+    private string _clickedButton = "";
+
+    private void EmailButtonClicked(MouseEventArgs e)
+    {
+        _clickedButton = "Email";
+    }
+
+    private void TextButtonClicked(MouseEventArgs e)
+    {
+        _clickedButton = "Text";
+    }
+
+    private void CallButtonClicked(MouseEventArgs e)
+    {
+        _clickedButton = "Call";
+    }
+}
