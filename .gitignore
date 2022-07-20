@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /BlazorComponents/Server/publish.cmd
 BlazorComponents/Server/App.db
+/BlazorComponents/Server/App.db-wal
+/BlazorComponents/Server/App.db-shm
